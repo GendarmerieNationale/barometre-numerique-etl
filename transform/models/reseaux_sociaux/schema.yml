@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: reseaux_sociaux_followers
+    columns:
+      - name: page_url
+      - name: page_name
+      - name: n_followers
+      - name: reseau
+        tests:
+          - accepted_values:
+              values: [ 'twitter' ]
+#      columns below may be null
+      - name: geo_dpt_iso
+      - name: geo_dpt_name
+      - name: geo_region_iso
+      - name: geo_region_name
+      - name: n_likes

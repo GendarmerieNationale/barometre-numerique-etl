@@ -1,0 +1,166 @@
+version: 2
+
+sources:
+  - name: tap_atinternet_gn
+    description: "
+    Données issues de l'API AT Internet Reporting v3, pour le site gendarmerie.interieur.gouv.fr
+    "
+    tables:
+      - name: hourly_visits
+        description: "
+        Visites par jour et heure de la journée
+        "
+        columns:
+          - name: m_bounces
+            description: "
+            Nombre de visites 'à rebond', c'est à dire avec moins de 2 pages (0 ou 1, peu importe le nombre d’événements).
+            "
+          - name: m_time_spent_per_visits
+            description: "
+            Durée moyenne des visites sur le site. Calcul : temps passé cumulé / visites à durée.
+            Cette métrique a une portée Visite et est exprimée en millisecondes.
+            
+            TODO: ajouter des métriques par page (ex: m_time_spent_per_pages_loads) ?
+            "
+          - name: m_unique_visitors
+            description: "
+            Nombre de visiteurs (toute personne reconnue la plupart du temps par un cookie et ayant fait au moins 
+            1 visite). Ces visiteurs sont bien distincts sur la période.
+            "
+          - name: m_visits
+            description: "
+            Une visite se caractérise par un ensemble d'événements qui ont lieu sur votre site (événement 'onsite') 
+            par un même visiteur. Si aucun événement n'est mesuré durant une période de temps définie (en général 
+            30 minutes), la visite se termine.
+            "
+          - name: date
+            description: "Format: 'YYYY-MM-DD'"
+          - name: visit_hour
+            description: "
+            Heure de la visite (0-23).
+            
+            ⚠️ Certaines lignes valent 'N/A' dans les données AT Internet, auquel cas la valeur ici sera -1. 
+            Cela peut arriver lorsque m_unique_visitors>0 et m_visits=0 par exemple. Donnée à ignorer?
+            "
+          - name: site_level2
+            description: "
+            Niveau 2 dans lequel est rangé l'événement mesuré. Information à portée 'événement'
+             (plusieurs valeurs possibles par visite).
+            Correspond à un 'sous-site', ex: 'recrutement', 'national', 'ecoles', etc 
+            "
+
+      - name: geo_visits
+        description: "
+        Visites par lieu (pays, region, ville) et par mois
+        "
+        columns:
+          - name: m_bounces
+          - name: m_time_spent_per_visits
+          - name: m_unique_visitors
+          - name: m_visits
+          - name: date_month
+            description: "Exemple: 'January', 'February', ..."
+          - name: date_year
+            description: "Exemple: 2020, 2021"
+          - name: date
+            description: "
+            Mois et années combinés au format 'YYYY-MM-DD' et en utilisant le premier jour du mois (DD=01).
+            Exemple: '2020-07-01'
+            "
+          - name: geo_country
+            description: "Exemple: 'France', 'United kingdom'"
+          - name: geo_region
+            description: "
+            En France: correspond à la région, mais à l'étranger: semble correspondre à la ville
+            Exemple: 'Pays-de-la-loire', 'London'
+            "
+          - name: geo_city
+            description: "Exemple: 'Saint-brevin-les-pins', 'Belleville', 'Le cergne', 'London'"
+
+      - name: pages_visits
+        description: "
+        Visites par page et par mois
+        "
+        columns:
+          - name: m_bounces
+          - name: m_time_spent_per_visits
+          - name: m_unique_visitors
+          - name: m_visits
+          - name: date_month
+          - name: date_year
+          - name: date
+          - name: site_level2
+          - name: page
+            description: "
+            Nom de la page visitée, parfois vide ou peu informatif.
+            
+            Exemples: 
+              'sous-officier-sur-le-terrain-sog', 
+              'decouvrir-nos-metiers', 
+              'devenir-reserviste',
+              'N/A'
+            "
+          - name: page_full_name
+            description: "
+            Nom de la page avec le chemin, s'il est bien construit (pas toujours le cas?).
+            
+            Exemples: 
+              'recrutements-et-conditions-d-acces::sous-officier-sur-le-terrain-sog', 
+              'decouvrir-nos-metiers', 
+              'notre-institution::generalites::nos-effectifs::devenir-reserviste',
+              'N/A'
+            "
+
+      - name: sources_visits
+        description: "
+        Visites par source et par mois
+        "
+        columns:
+          - name: m_bounces
+          - name: m_time_spent_per_visits
+          - name: m_unique_visitors
+          - name: m_visits
+          - name: date_month
+          - name: date_year
+          - name: date
+          - name: src
+            description: "Type de source"
+          - name: src_detail
+            description: "
+            En fonction de la `src`, plusieurs valeurs possibles.
+            Exemples:
+              - 'Search engines' : 'Google', 'Bing', 'Ecosia'
+              - 'Direct traffic' : 'Direct access (out of site)', 'Direct access (continuation of visit)'
+              - 'Social media' : 'Facebook', 'Snapchat
+              - 'Referrer sites' : 'tracking-fra02.omnitagjs.com'
+              - 'Portal sites' : 'www.cybermalveillance.gouv.fr', 'www.interieur.gouv.fr'
+              - 'gie-sog-gav' : 'gie-sog-gav' (unique valeur possible)
+              - 'N/A' : 'N/A' (unique valeur possible)
+              - 'Webmails' : 'Google', 'SFR'
+            "
+          - name: src_referrer_url
+            description: "
+            L'URL complète du referrer (que ce soit un search engine, un réseau social, un referrer site, etc). 
+            Peut être 'N/A' (pour du trafic direct par ex.)
+            "
+
+      - name: devices_visits
+        description: "
+        Visites par appareil et par mois
+        "
+        columns:
+          - name: m_bounces
+          - name: m_time_spent_per_visits
+          - name: m_unique_visitors
+          - name: m_visits
+          - name: date_month
+          - name: date_year
+          - name: date
+          - name: device_type
+            description: "Exemple: 'Mobile Phone', 'Desktop', 'Tablet', 'TV'"
+          - name: os_group
+            description: "Exemple: 'Android', 'iOS', 'Windows', 'macOS', 'Linux'"
+          - name: browser_group
+            description: "Exemple: 'Safari', 'Chrome Mobile', 'Chrome', 'Firefox'"
+          - name: browser_language
+            description: "Exemple: 'fr', 'en', 'it'"

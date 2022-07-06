@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: recrutement_visits_per_metier
+    description: "
+    Statistiques plus spécifiques sur les pages 'fiches métiers' du site de recrutement,
+    toujours agrégées par mois.
+    Cela concerne les pages de l'onglet 'Découvrir nos métiers', du type: 'decouvrir-nos-metiers::gendarme-dans-un-psig'
+    "
+    columns:
+      - name: month
+      - name: month_str
+      - name: page_full_name
+      - name: metier_name
+      - name: visit_count
+
+  - name: iggn_effectifs_clean
+    description: "
+    Données originales (voir `iggn_effectifs_raw`) simplement reformatées pour qu'elles soient
+     plus faciles d'utilisation (unpivot).
+    "
+    columns:
+      - name: annee
+      - name: categorie
+        tests:
+          - accepted_values:
+              values: [
+                'Officier de gendarmerie',
+                'Officier du corps technique et administratif',
+                'Sous-officier de gendarmerie',
+                'Sous-officier du corps de soutien technique et administratif de la gendarmerie',
+                'Gendarme adjoint volontaire',
+                'Personnel civil',
+              ]
+      - name: type_personnel
+        tests:
+          - accepted_values:
+              values: [ 'civil', 'militaire' ]
+      - name: effectifs
+        description: "
+        Effectif total en gestion au 31/12 de l'année considérée, y compris personnes en position de “non-activité”
+        et personnes “détachées” (dont les élèves).
+        "
+      - name: genre
+        tests:
+          - accepted_values:
+              values: [ 'homme', 'femme' ]

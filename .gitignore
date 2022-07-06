@@ -1,0 +1,16 @@
+**/.DS_Store
+**/__pycache__
+.idea
+/venv
+/.meltano
+transform/dbt_packages
+.env
+
+# Generated automatically when setting-up the project
+# (depend on the environment and the meltano executable path)
+crontab.file
+scripts/initial_meltano_run.sh
+
+# 'sensitive' data
+transform/data/easiware_categories.csv
+README (interne).md

@@ -1,0 +1,131 @@
+version: 2
+
+seeds:
+  - name: test_code_postaux
+    description: "Quelques codes postaux pour tester la fonction 'code_postal_to_dpt_code'"
+    columns:
+      - name: code_postal
+      - name: expected_dpt_code
+
+  - name: easiware_categories
+    description: "Catégories de la classification easiware"
+    columns:
+      - name: motif_parent
+      - name: motif
+      - name: categorie
+        tests:
+          - accepted_values:
+              values: [ 'demande_info', 'victime', 'PNAV', 'signalement' ]
+
+  - name: fra_iso_3166_2
+    description: "
+    Données ISO 3166-2 pour la France: régions et départements, ainsi que leurs codes ISO.
+    "
+    columns:
+      - name: subdiv_type
+        tests:
+          - accepted_values:
+              values: [
+                "région métropolitaine",
+                "collectivité départementale d''outre-mer",
+                "collectivité territoriale unique d''outre-mer",
+                "collectivité d’outre-mer à statut particulier",
+                "collectivité d''outre-mer",
+                "territoire d''outre-mer",
+                "collectivité métropolitaine à statut particulier",
+                "collectivité européenne",
+                "dépendance",
+                "département métropolitain",
+                "territoire hack",
+              ]
+      - name: iso_3166_2
+        tests:
+          - unique
+          - not_null
+      - name: subdiv_name
+      - name: parent_subdiv
+      - name: atinternet_geo_region
+        description: "Nom de la région dans les données AT Internet ('geo_region')"
+
+  - name: iggn_effectifs_raw
+    description: "
+    Effectifs de la Gendarmerie Nationale (homme/femme). 
+    Effectif total en gestion au 31/12 de l'année considérée, y compris personnes en position de “non-activité”
+     et personnes “détachées” (dont les élèves).
+     
+    Source: DGGN/DPMGN/SDPRH/BAA
+    "
+    columns:
+      - name: annee
+      - name: categorie
+        tests:
+          - accepted_values:
+              values: [
+                'Officier de gendarmerie',
+                'Officier du corps technique et administratif',
+                'Sous-officier de gendarmerie',
+                'Sous-officier du corps de soutien technique et administratif de la gendarmerie',
+                'Gendarme adjoint volontaire',
+                'Personnel civil',
+              ]
+      - name: effectifs_homme
+      - name: effectifs_femme
+
+  - name: iggn_stop_discri
+    description: "
+    Nombre de signalements internes à la Gendarmerie, recueillis via la plateforme Stop-Discri.
+    À partir de 2019, les signalements sont distingués selon 2 catégories: demande de conseil et signalement effectif.
+    À partir de 2020, les signalements effectifs sont eux-mêmes distingués selon 5 sous-catégories.
+    
+    Source: rapports annuels de l'IGGN (rapports publics de 2019 et 2020).
+    "
+    columns:
+      - name: annee
+      - name: motif
+        tests:
+          - accepted_values:
+              values: [
+                'signalement_effectif',
+                'demande_conseil',
+              ]
+      - name: sous_motif
+        tests:
+          - accepted_values:
+              values: [
+                'harcelement_moral_au_travail',
+                'harcelement_sexuel',
+                'discriminations',
+                'violences',
+                'autres',
+              ]
+      - name: n_signalements
+
+  - name: iggn_nb_reclamations
+    description: "
+    Nombre de réclamations de particuliers adressées à l'IGGN.
+    
+    Source: rapports annuels de l'IGGN (rapports publics de 2019 et 2020).
+    "
+    columns:
+      - name: annee
+      - name: n_reclamations
+
+  - name: iggn_pourcentage_manquements
+    description: "
+    Pourcentage des réclamations de particuliers révélant des manquements déontologiques.
+    
+    Source: rapports annuels de l'IGGN (rapports publics de 2019 et 2020).
+    "
+    columns:
+      - name: annee
+      - name: pourcentage_manquements
+
+  - name: recrutement_noms_metiers
+    description: "
+    Noms métiers 'propres' pour les fiches de recrutement: accents ou caractères spéciaux
+    à corriger.
+    "
+    columns:
+      - name: name
+        description: "Nom métier après qques étapes de nettoyage, mais à remplacer sur le site par name_clean."
+      - name: name_clean

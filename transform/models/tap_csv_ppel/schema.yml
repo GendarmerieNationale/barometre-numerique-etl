@@ -1,0 +1,88 @@
+version: 2
+
+sources:
+  - name: tap_csv_ppel
+    tables:
+      - name: ppel_logs
+        columns:
+          - name: stats_id
+            tests:
+              - unique
+              - not_null
+          - name: stats_debut_declaration
+          - name: stats_fin_declaration
+          - name: stats_dpt_unite
+          - name: stats_pers_physique
+          - name: stats_pers_morale
+
+models:
+  - name: ppel_clean_logs
+    columns:
+      - name: stats_id
+        tests:
+          - unique
+          - not_null
+      - name: datetime
+        description: "Date et heure du début de la préplainte"
+      - name: month
+      - name: month_str
+      - name: duree
+        description: "Durée de la préplainte"
+      - name: dpt_code
+        description: "
+        Code du département de l'unité dans laquelle la préplainte a été effectuée.
+        Exemple: '06', '973', '75C', '2A'
+        "
+      - name: geo_dpt_iso
+        description: "Code ISO 3166-2 correspondant, lorsqu'il y a eu un correspondance"
+      - name: geo_dpt_name
+      - name: type_personne
+
+  - name: ppel_daily
+    description: "Chiffres et métriques par jour"
+    columns:
+      - name: date
+        tests:
+          - unique
+          - not_null
+      - name: month
+      - name: month_str
+      - name: n_preplaintes
+        description: "Nombre de dossiers de pré-plainte en ligne déposés dans la journée"
+      - name: duree_moy
+        description: "Durée moyenne de la procédure en ligne sur la journée"
+      - name: duree_med
+        description: "Durée médiane de la procédure en ligne sur la journée"
+
+  - name: ppel_person_type
+    description: "
+    Chiffres et métriques par type de personne déposant la pré-plainte: 
+    personne physique ou bien morale.
+    "
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: type_personne
+        tests:
+          - accepted_values:
+              values: [ 'morale', 'physique', 'unknown' ]
+      - name: n_preplaintes
+      - name: duree_moy
+      - name: duree_med
+
+  - name: ppel_geo
+    description: "Chiffres et métriques par département"
+    columns:
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: dpt_code
+      - name: geo_dpt_iso
+      - name: geo_dpt_name
+      - name: n_preplaintes
+      - name: duree_moy
+      - name: duree_med
+

@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: tap_twitter
+    tables:
+      - name: users
+        columns:
+          - name: id
+          - name: username
+          - name: name
+          - name: created_at
+          - name: verified
+          - name: public_metrics
+
+models:
+  - name: twitter_followers

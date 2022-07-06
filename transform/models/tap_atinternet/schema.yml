@@ -1,0 +1,248 @@
+version: 2
+
+models:
+  - name: atinternet_hourly_visits_clean
+    description: "
+    Données quasi brutes (une ligne par visite), simplement reformatées et filtrées 
+    pour ne garder que les lignes avec m_visits>0
+    "
+    columns:
+      - name: src_website
+        description: "
+        Site d'où sont issues les données:
+        - 'gn' pour 'gendarmerie.interieur.gouv.fr'
+        - 'sp' pour 'service-public.fr'
+        "
+        tests:
+          - accepted_values:
+              values: [ 'gn', 'sp' ]
+      - name: datetime
+      - name: date
+      - name: visit_hour
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: year
+      - name: subsite
+        tests:
+          - accepted_values:
+              values: [
+                'recrutement',
+                'national',
+                'ecoles (cegn)',
+                'pjgn',
+                'gign',
+                'garde republicaine',
+                'eogn',
+                'reconversion',
+                'N/A',
+                'musee',
+                'creogn',
+                'onsts',
+                'cyberimpact',
+              ]
+      - name: m_bounces
+      - name: m_time_spent_per_visits
+      - name: m_unique_visitors
+      - name: m_visits
+
+  - name: atinternet_geo_visits_clean
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn', 'sp' ]
+      - name: date
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: year
+      - name: geo_city
+      - name: geo_country
+      - name: geo_region_iso
+      - name: geo_region_name
+      - name: m_bounces
+      - name: m_time_spent_per_visits
+      - name: m_unique_visitors
+      - name: m_visits
+
+  - name: atinternet_pages_visits_clean
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn', 'sp' ]
+      - name: date
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: year
+      - name: subsite
+      - name: page
+      - name: page_full_name
+      - name: m_bounces
+      - name: m_time_spent_per_visits
+      - name: m_unique_visitors
+      - name: m_visits
+
+  - name: atinternet_sources_visits_clean
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn', 'sp' ]
+      - name: date
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: year
+      - name: src
+      - name: src_detail
+      - name: src_referrer_url
+      - name: m_bounces
+      - name: m_time_spent_per_visits
+      - name: m_unique_visitors
+      - name: m_visits
+
+  - name: atinternet_devices_visits_clean
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn', 'sp' ]
+      - name: date
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: year
+      - name: device_type
+      - name: os_group
+      - name: browser_group
+      - name: browser_language
+      - name: m_bounces
+      - name: m_time_spent_per_visits
+      - name: m_unique_visitors
+      - name: m_visits
+
+  - name: atinternet_visits_per_hour
+    description: "
+    Statistiques agrégées par jour et par heure (toutes pages confondues),
+     pour le site de la GN uniquement
+    "
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: datetime
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: subsite
+      - name: visit_count
+
+  - name: atinternet_visits_per_geo
+    description: "
+    Statistiques agrégées par mois et par localisation, pour le site de la GN uniquement
+    "
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+        description: "Format: 'YYYY-MM'"
+      - name: geo_region_iso
+      - name: geo_region_name
+      - name: geo_country
+      - name: geo_city
+      - name: visit_count
+
+  - name: atinternet_visits_per_geo_country
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: geo_country
+
+  - name: atinternet_visits_per_geo_city
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: geo_city
+
+  - name: atinternet_visits_per_geo_region
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: geo_region_iso
+      - name: geo_region_name
+
+  - name: atinternet_visits_per_page
+    description: "
+    Statistiques agrégées par mois et par page, pour le site de la GN uniquement
+    "
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: page_full_name
+      - name: visit_count
+
+  - name: atinternet_visits_per_device
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: device_type
+      - name: os_group
+      - name: browser_group
+
+  - name: atinternet_visits_per_source
+    columns:
+      - name: src_website
+        tests:
+          - accepted_values:
+              values: [ 'gn' ]
+      - name: month
+        tests:
+          - not_null
+      - name: month_str
+      - name: src
+      - name: src_detail

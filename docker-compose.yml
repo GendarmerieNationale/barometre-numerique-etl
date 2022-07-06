@@ -1,0 +1,46 @@
+version: '3.8'
+
+x-meltano-image: &meltano-image
+  image: meltano/meltano:v2.1.0-python3.8
+  volumes:
+    - .:/project
+    - ../data:/data
+
+services:
+  meltano-ui:
+    <<: *meltano-image
+    command: ui
+#    environment:
+#      # Useful to run 'meltano invoke dbt:run' commands
+#      DBT_TARGET: ${DBT_TARGET}
+#      DBT_TARGET_SCHEMA: ${DBT_TARGET_SCHEMA}
+#      PG_ADDRESS: ${DBT_PG_ADDRESS}
+#      PG_PORT: ${DBT_PG_PORT}
+#      PG_USERNAME: ${DBT_PG_USERNAME}
+#      PG_DATABASE: ${DBT_PG_DATABASE}
+#      PG_PASSWORD: ${DBT_PG_PASSWORD}
+    expose:
+      - 5000
+    ports:
+      - "5000:5000"  # meltano UI
+      - "8092:8080"  # dbt docs ui
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:${DOCKER_HOST_GATEWAY}"
+
+  # # Uncomment if you are using the Airflow orchestrator, delete otherwise
+  # airflow-scheduler:
+  #   <<: *meltano-image
+  #   command: invoke airflow scheduler
+  #   expose:
+  #     - 8793
+  #   restart: unless-stopped
+  #
+  # airflow-webserver:
+  #   <<: *meltano-image
+  #   command: invoke airflow webserver
+  #   expose:
+  #     - 8080
+  #   ports:
+  #     - 8080:8080
+  #   restart: unless-stopped

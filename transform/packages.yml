@@ -1,0 +1,6 @@
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 0.8.1
+# see https://gitlab.com/meltano/squared/-/tree/master/data/transform#code-gen
+#  - package: dbt-labs/codegen
+#    version: 0.5.0

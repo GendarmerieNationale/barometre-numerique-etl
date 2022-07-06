@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: tap_partoo
+    tables:
+      - name: businesses
+        columns:
+          - name: city
+          - name: group_id
+          - name: id
+          - name: lat
+          - name: long
+          - name: zipcode
+      - name: groups
+        columns:
+          - name: id
+          - name: name
+      - name: reviews
+        columns:
+          - name: business_id
+          - name: content
+          - name: date
+          - name: id
+          - name: rating
+          - name: update_date

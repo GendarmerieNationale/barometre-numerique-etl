@@ -1,0 +1,90 @@
+version: 2
+
+sources:
+  - name: tap_csv_easiware
+    tables:
+      - name: easiware_requests
+        description: "
+      Données brutes de easiware, une ligne par conversation.
+      "
+        columns:
+          - name: reference_hash
+            tests:
+              - unique
+              - not_null
+          - name: date
+            description: "
+          Format: '11/04/2022 16:25' (heure et date française a priori)
+          "
+          - name: motif
+          - name: motif_parent
+
+models:
+  - name: easiware_requests_clean
+    description: "
+    Données filtrées pour garder uniquement les demandes MaGendarmerie (pas de données de la PNAV).
+    "
+    columns:
+      - name: reference
+        tests:
+          - unique
+          - not_null
+      - name: datetime
+        tests:
+          - not_null
+      - name: original_datetime
+        description: "
+        Timestamp initial dans les données easiware (format texte)
+        
+        Exemple: '10/02/2021 09:03'
+        "
+      - name: category
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'demande_info', 'victime', 'signalement' ]
+
+  - name: easiware_n_contacts_total
+    description: "
+    Nombre total de prises de contacts depuis le début (1 seule ligne dans la table)
+    "
+    columns:
+      - name: n_contact
+
+  - name: easiware_n_contacts_hour
+    description: "
+    Affluence par heure de la journée, en moyenne sur l'année.
+    "
+    columns:
+      - name: hour
+        tests:
+          - unique
+          - not_null
+        description: "Heure de la journée (0-23)"
+      - name: n_contact
+        description: "Nombre de prises de contact"
+
+  - name: easiware_n_contacts_date
+    description: "
+    Nombre total de contacts, par jour.
+    "
+    columns:
+      - name: date
+        tests:
+          - unique
+          - not_null
+        description: "Date des prises de contact (sans l'heure)"
+      - name: n_contact
+        description: "Nombre de prises de contact"
+
+  - name: easiware_n_contacts_category
+    description: "
+    Nombre total de contacts, par catégorie et par mois.
+    "
+    columns:
+      - name: category
+      - name: month
+      - name: month_str
+        description: "Format: 'YYYY-MM'"
+      - name: n_contact
+        description: "Nombre de prises de contact"

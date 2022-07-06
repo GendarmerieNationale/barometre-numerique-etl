@@ -1,0 +1,279 @@
+version: 1
+send_anonymous_usage_stats: false
+project_id: f0270312-d6a2-4e92-96e7-c7879e1f3bc4
+plugins:
+  extractors:
+  - name: tap-spreadsheets-anywhere
+    variant: ets
+    pip_url: git+https://github.com/ets/tap-spreadsheets-anywhere.git
+  - name: tap-csv-voxusagers
+    inherit_from: tap-spreadsheets-anywhere
+    config:
+      tables:
+      - path: file://../data
+        name: experiences
+        pattern: voxusagers-experiences.csv
+        start_date: '2010-01-01T00:00:00Z'
+        key_properties:
+        - id
+        format: csv
+        delimiter: ;
+  - name: tap-csv-easiware
+    inherit_from: tap-spreadsheets-anywhere
+    config:
+      tables:
+      - path: file://../data/easiware
+        name: easiware_requests
+        pattern: .*.csv
+        start_date: '2010-01-01T00:00:00Z'
+        key_properties: []
+        format: csv
+        delimiter: ;
+        field_names:
+        - reference
+        - date
+        - canal
+        - motif_parent
+        - motif
+        - element_de_qualification
+  - name: tap-csv-ppel
+    inherit_from: tap-spreadsheets-anywhere
+    config:
+      tables:
+      - path: file://../data/ppel
+        name: ppel_logs
+        pattern: .*.csv
+        start_date: '2010-01-01T00:00:00Z'
+        key_properties:
+        - stats_id
+        format: csv
+        delimiter: ','
+  - name: tap-partoo
+    namespace: tap_partoo
+    pip_url: git+https://github.com/GendarmerieNationale/tap-partoo.git
+    executable: tap-partoo
+    capabilities:
+    - catalog
+    - state
+    - discover
+    settings:
+    - name: api_key
+      kind: password
+    - name: start_date
+      kind: date_iso8601
+    config:
+      start_date: '2020-01-17T00:00:00Z'
+  - name: tap-atinternet
+    namespace: tap_atinternet
+    pip_url: git+https://github.com/GendarmerieNationale/tap-atinternet.git
+    executable: tap-atinternet
+    capabilities:
+    - catalog
+    - discover
+    - state
+    settings:
+    - name: api_key
+      kind: password
+    - name: secret_key
+      kind: password
+    - name: site_id
+      kind: integer
+    - name: start_date
+      kind: date_iso8601
+    - name: max_results
+      kind: integer
+    - name: filter_str
+      kind: string
+    metadata:
+      visits:
+        replication-method: INCREMENTAL
+  - name: tap-atinternet-gn
+    inherit_from: tap-atinternet
+  - name: tap-atinternet-sp
+    inherit_from: tap-atinternet
+    config:
+      filter_str: gendarmerie
+  - name: tap-twitter
+    namespace: tap_twitter
+    pip_url: git+https://git.sr.ht/~alexandrethm/tap-twitter
+    executable: tap-twitter
+    capabilities:
+    - catalog
+    - discover
+    - state
+    settings:
+    - name: bearer_token
+      kind: password
+    - name: user_ids
+      kind: array
+    - name: url_patterns
+      kind: array
+    - name: start_date
+      kind: date_iso8601
+    config:
+      user_ids:
+      - '2184489764'
+      - '1055386136569352193'
+      - '1439209623999942664'
+      - '1154658153344225282'
+      - '1045646544840667138'
+      - '1417503843668070402'
+      - '1090937275675041792'
+      - '1067061227422126080'
+      - '2294502426'
+      - '1255387271274127365'
+      - '1061152745414184961'
+      - '2285962240'
+      - '1362673270953246720'
+      - '1364851968523517952'
+      - '971797579968270338'
+      - '1301132963359457280'
+      - '1173476114452422657'
+      - '1257936771872063488'
+      - '971792282767720448'
+      - '959073961718853633'
+      - '1201869550653980673'
+      - '1154693301947293698'
+      - '2296247437'
+      - '2294658721'
+      - '1059760589357092864'
+      - '1202651215470968837'
+      - '1065909276500209664'
+      - '1060110114986881024'
+      - '1139455470446555136'
+      - '997418650553520128'
+      - '1303352339907174400'
+      - '959068387166081024'
+      - '1306504264886476801'
+      - '1369647067501584386'
+      - '1037240095181549568'
+      - '1392036209904529409'
+      - '991934220045115392'
+      - '971762380991553536'
+      - '2296170812'
+      - '1077121571737780225'
+      - '1086392767000006656'
+      - '1139094591762776064'
+      - '1052490797713633280'
+      - '1073567633117732865'
+      - '1320064114706841601'
+      - '1036490236191236096'
+      - '2294198485'
+      - '1095244733759320064'
+      - '1085115779794776064'
+      - '1052553586532605952'
+      - '1463861259632316422'
+      - '1478011565068673026'
+      - '1222462300067704832'
+      - '988422718478483456'
+      - '1053266481222426626'
+      - '1504369714658742273'
+      - '1356911775711703041'
+      - '1498657855158861824'
+      - '997390661933568002'
+    select:
+    - users.created_at
+    - users.username
+    - users.name
+    - users.verified
+    - users.public_metrics
+    - users.public_metrics.*
+  - name: tap-perceval
+    namespace: tap_perceval
+    pip_url: git+https://github.com/GendarmerieNationale/tap-perceval.git
+    executable: tap-perceval
+    capabilities:
+    - catalog
+    - discover
+    - state
+    settings:
+    - name: file_path
+      kind: string
+    config:
+      file_path: barnum_raw_data/perceval/perceval.json
+  loaders:
+  - name: target-postgres
+    variant: transferwise
+    pip_url: pipelinewise-target-postgres
+    config:
+      dbname: cyberimpact_dwh
+      user: meltano
+      # todo: change back to default (true) once we use incremental logging ! (and specify primary keys for everyone..)
+      primary_key_required: false
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  transformers:
+  - name: dbt
+    pip_url: dbt-core~=1.0.0 dbt-postgres~=1.0.0 dbt-redshift~=1.0.0 dbt-snowflake~=1.0.0
+      dbt-bigquery~=1.0.0
+    config:
+      models: "*"
+  files:
+  - name: dbt
+    pip_url: git+https://gitlab.com/meltano/files-dbt.git@config-version-2
+    update:
+      transform/profile/profiles.yml: false
+  mappers:
+  - name: meltano-map-transformer
+    variant: meltano
+    pip_url: git+https://github.com/MeltanoLabs/meltano-map-transform.git
+    mappings:
+    - name: hash-ids
+      config:
+        stream_maps:
+          easiware_requests:
+            reference_hash: md5(reference)
+            date: date
+            motif_parent: motif_parent
+            motif: motif
+            __else__: null
+schedules:
+- name: daily-csv-easiware-load
+  interval: '@daily'
+  job: csv-easiware-to-postgres-with-hash-ids
+- name: daily-ppel-load
+  interval: '@daily'
+  extractor: tap-csv-ppel
+  loader: target-postgres
+  transform: run
+  start_date: 2022-06-27 00:00:00
+- name: daily-twitter-load
+  interval: '@daily'
+  extractor: tap-twitter
+  loader: target-postgres
+  transform: run
+  start_date: 2022-06-27 00:00:00
+- name: daily-partoo-load
+  interval: '@daily'
+  extractor: tap-partoo
+  loader: target-postgres
+  transform: run
+  start_date: 2022-06-27 00:00:00
+- name: hourly-atinternet-load
+  interval: '@hourly'
+  job: atinternet-to-postgres
+- name: csv-voxusagers
+  interval: '@once'
+  extractor: tap-csv-voxusagers
+  loader: target-postgres
+  transform: run
+  start_date: 2022-06-27 00:00:00
+- name: perceval-load
+  interval: '@once'
+  extractor: tap-perceval
+  loader: target-postgres
+  transform: run
+  start_date: 2022-06-27 00:00:00
+jobs:
+- name: csv-easiware-to-postgres-with-hash-ids
+  tasks:
+  - tap-csv-easiware hash-ids target-postgres dbt:run
+- name: atinternet-to-postgres
+  tasks:
+  - tap-atinternet-gn target-postgres
+  - tap-atinternet-sp target-postgres
+  - dbt:run
+default_environment: my_env
+environments:
+  - name: my_env

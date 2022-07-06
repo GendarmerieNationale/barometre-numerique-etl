@@ -1,0 +1,20 @@
+# This file is usually managed by the 'dbt' file bundle and updated automatically when `meltano upgrade` is run.
+# But to prevent any manual changes from being overwritten, automatic updates have been disabled with:
+#     meltano config --plugin-type=files dbt set _update transform/profile/profiles.yml false
+# You can check this in the meltano.yml config
+
+config:
+  send_anonymous_usage_stats: False
+  use_colors: True
+meltano:
+  target: "postgres"
+  outputs:
+    postgres:
+      type: postgres
+      threads: 2
+      host: "{{ env_var('DBT_PG_ADDRESS') }}"
+      port: "{{ env_var('DBT_PG_PORT') | int }}"
+      user: "{{ env_var('DBT_PG_USERNAME') }}"
+      pass: "{{ env_var('DBT_PG_PASSWORD') }}"
+      dbname: "{{ env_var('DBT_PG_DATABASE') }}"
+      schema: "{{ env_var('DBT_TARGET_SCHEMA') }}"

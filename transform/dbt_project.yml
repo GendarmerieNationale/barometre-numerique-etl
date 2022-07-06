@@ -1,0 +1,38 @@
+name: cyberimpact_dbt
+version: '1.0'
+# Profiles define the dbt targets (in our case, postgres only)
+#  and their config/credentials.
+# Instead of the default dbt config file (~/.dbt/profiles.yml),
+#  here profiles are defined in transform/profile/profiles.yml
+profile: meltano
+config-version: 2
+require-dbt-version: [ ">=1.0.0", "<2.0.0" ]
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths:
+  - models
+analysis-paths:
+  - analysis
+test-paths:
+  - tests
+seed-paths:
+  - data
+macro-paths:
+  - macros
+snapshot-paths:
+  - snapshots
+target-path: ../.meltano/transformers/dbt/target # directory which will store compiled SQL files
+log-path: logs
+packages-install-path: dbt_packages
+clean-targets: # directories to be removed by `dbt clean`
+  - ../.meltano/transformers/dbt/target
+  - dbt_packages
+  - logs
+
+on-run-start:
+  - '{{define_utils()}}' # utility functions
+models:
+  cyberimpact_dbt:
+    +materialized: table

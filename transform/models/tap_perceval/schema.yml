@@ -1,0 +1,90 @@
+version: 2
+
+sources:
+  - name: tap_perceval
+    tables:
+      - name: age_categories_month
+        description: "
+        Nombre de signalements Perceval effectués par mois et par catégorie d'age.
+        "
+        columns:
+          - name: age_cat
+            tests:
+              - accepted_values:
+                  values: [
+                    "00",
+                    "15-24",
+                    "25-34",
+                    "35-44",
+                    "45-54",
+                    "55-64",
+                    "65-74",
+                    "75+",
+                  ]
+          - name: month
+          - name: count
+
+      - name: dpt_report_month
+        description: "
+        Nombre de signalements Perceval effectués par mois et par département.
+        "
+        columns:
+          - name: dpt_code
+          - name: month
+          - name: count
+
+      - name: amount_of_money_day
+        description: "
+        Total des sommes signalées sur Perceval, par jour.
+        "
+        columns:
+          - name: day
+          - name: amount
+
+      - name: nb_report_day
+        description: "
+        Nombre de signalements Perceval, par jour.
+        "
+        columns:
+          - name: day
+          - name: count
+
+
+models:
+  - name: perceval_daily
+    columns:
+      - name: date
+      - name: date_str
+      - name: month
+      - name: month_str
+      - name: amount
+      - name: count
+
+  - name: perceval_geo
+    columns:
+      - name: month
+      - name: month_str
+      - name: dpt_code
+      - name: geo_dpt_iso
+      - name: geo_dpt_name
+      - name: count
+
+  - name: perceval_age_cat
+    columns:
+      - name: month
+      - name: month_str
+      - name: age_cat
+      - name: count
+
+  - name: perceval_monthly
+    description: "
+    Données agrégées au mois, toutes catégories d'âge et tous départements confondus.
+    Calculé à partir des données de `perceval_daily`.
+    "
+    columns:
+      - name: month
+      - name: month_str
+      - name: count
+      - name: amount
+      - name: avg_amount
+        description: "Montant moyen déclaré par signalement (=amount/count)"

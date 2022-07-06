@@ -1,0 +1,154 @@
+version: 2
+
+sources:
+  - name: tap_csv_voxusagers
+    tables:
+      - name: experiences
+        columns:
+          - name: _smart_source_bucket
+          - name: _smart_source_file
+          - name: _smart_source_lineno
+          - name: id
+            description: Primary key
+          - name: action
+          - name: amélioration_de_service_à_considérer
+          - name: clé_de_tracking
+          - name: code_postaux
+          - name: commune_usager
+          - name: date_action_engagée
+          - name: date_action_réalisée
+          - name: date_de_1ere_réponse
+          - name: date_de_publication
+          - name: description
+          - name: etat_de_lexpérience
+          - name: evaluation_du_ressenti_par_canal_de_contact
+          - name: evaluation_par_lauteur
+          - name: expérience_hors_structure
+          - name: expériences_similaires
+          - name: motif_de_rejet
+          - name: posté_comme
+          - name: pseudonyme_usager
+          - name: ressenti_usager
+          - name: réponse_pas_utile
+          - name: réponse_utile
+          - name: réponses
+          - name: statut_de_lexpérience
+          - name: statut_réponse
+          - name: structure
+          - name: tags_généraux_accessibilité
+          - name: tags_généraux_informationexplication
+          - name: tags_généraux_relation
+          - name: tags_généraux_réactivité
+          - name: tags_généraux_simplicitécomplexité
+          - name: tags_métiers
+          - name: titre
+          - name: typologies
+          - name: écrit_le
+
+models:
+  - name: voxusagers_clean
+    description: "
+    Original data (1 line per experience usager), selecting only a couple interesting fields.
+    "
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: date_ecriture
+        description: "
+        Date d'écriture de l'expérience par l'usager.
+        ⚠️ NULL dans pas mal de cas, notamment sur les expériences récentes
+        (donnée deprecated?)
+        "
+      - name: date_publi
+        description: "
+        Date à laquelle l'expérience est publiée sur la plateforme,
+         après avoir passé la modération
+        "
+      - name: date_reponse
+      - name: days_to_response
+        description: "Nombre de jours entre la 1ère réponse donnée et la date de publication de l'expérience."
+      - name: etat_experience
+        tests:
+          - accepted_values:
+              values: [ 'Traitée', 'A traiter' ]
+      - name: ressenti_usager
+        tests:
+          - accepted_values:
+              values: [ 'Positif', 'Négatif', 'Neutre']
+      - name: tag_accessibilite
+      - name: tag_explication
+      - name: tag_relation
+      - name: tag_reactivite
+      - name: tag_reactivite
+      - name: tag_simplicite
+      - name: code_postal
+        description: "Code postal de la commune de l'usager"
+      - name: typologie_structure_1
+        description: "Typologie de la première structure identifiée (e.g. 'Région de Gendarmerie', 'Unité Numérique')"
+      - name: typologie_structure_2
+        description: "Typologie de la seconde structure identifiée (généralement vide, 
+        peut-être une autre structure liée à la GN ou non)"
+      - name: typologie_structure_3
+        description: "Idem"
+
+  - name: exp_total
+    description: "Total number of voxusagers experiences related to GN"
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "exp_pos_count + exp_moy_count + exp_neg_count = exp_count"
+    columns:
+      - name: exp_count
+      - name: exp_pos_count
+        description: "Number of experiences where 'Ressenti usager' was positive"
+      - name: exp_moy_count
+        description: "Number of experiences where 'Ressenti usager' was neutral"
+      - name: exp_neg_count
+        description: "Number of experiences where 'Ressenti usager' was negative"
+      - name: exp_anwsered_count
+      - name: avg_days_to_response
+      - name: p75_days_to_response
+
+  - name: exp_count_day
+    description: "Total number of new voxusagers experiences related to GN per day"
+    columns:
+      - name: month_str
+        description: "text, in the 'YYYY-MM' format"
+      - name: month
+        description: "date, first day of the month"
+      - name: date
+      - name: exp_count
+
+
+  - name: exp_typologie
+    description: "
+    Total number of new voxusagers experiences per typologie structure. Note that multiple structures 
+    can be associated to a single voxusagers experience, so the sum here is likely higher than 
+    the total experience count.
+    
+    ⚠️ We restrict the typologies to the ones related to GN (e.g. 'Brigade de gendarmerie', etc). You 
+    may need to update the list in `exp_typologie.sql` if it changes in the future.
+    "
+    columns:
+      - name: typologie_structure
+      - name: exp_count
+
+  - name: exp_tags
+    description: "
+    On each voxusagers experience, the user can tag a part of the process (e.g. accessibilite, simplicite, etc) as 
+    either positive or negative. This is not mandatory, so the total of positive+negative counts
+    is likely lower than total_count.
+    "
+    columns:
+      - name: tag
+        tests:
+          - accepted_values:
+              values: [ 'tag_accessibilite','tag_explication','tag_relation','tag_reactivite','tag_simplicite' ]
+      - name: pos_count
+      - name: med_count
+      - name: neg_count
+      - name: total_count
+        description: "Should match exp_total.exp_count, but will typically be higher 
+        than pos_count + med_count + neg_count, since it also counts experiences with no vote (abstention)
+        "

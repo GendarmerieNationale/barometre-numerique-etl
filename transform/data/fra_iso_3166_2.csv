@@ -1,0 +1,128 @@
+subdiv_type,iso_3166_2,subdiv_name,parent_subdiv,atinternet_geo_region
+région métropolitaine,FR-ARA,Auvergne-Rhône-Alpes,,Auvergne-rhone-alpes
+région métropolitaine,FR-BFC,Bourgogne-Franche-Comté,,Bourgogne-franche-comte
+région métropolitaine,FR-BRE,Bretagne,,Bretagne
+région métropolitaine,FR-CVL,Centre-Val de Loire,,Centre-val de loire
+région métropolitaine,FR-GES,Grand-Est,,Grand-est
+région métropolitaine,FR-HDF,Hauts-de-France,,Hauts-de-france
+région métropolitaine,FR-NOR,Normandie,,Normandie
+région métropolitaine,FR-NAQ,Nouvelle-Aquitaine,,Nouvelle-aquitaine
+région métropolitaine,FR-OCC,Occitanie,,Occitanie
+région métropolitaine,FR-PDL,Pays-de-la-Loire,,Pays-de-la-loire
+région métropolitaine,FR-PAC,Provence-Alpes-Côte-d’Azur,,Provence-alpes-cote-d'azur
+région métropolitaine,FR-IDF,Île-de-France,,Ile-de-france
+collectivité départementale d'outre-mer,FR-971,Guadeloupe,,Guadeloupe
+collectivité départementale d'outre-mer,FR-976,Mayotte,,Mayotte
+collectivité départementale d'outre-mer,FR-974,La Réunion,,Reunion
+collectivité territoriale unique d'outre-mer,FR-972,Martinique,,Martinique
+collectivité territoriale unique d'outre-mer,FR-973,Guyane,,French guiana
+collectivité d’outre-mer à statut particulier,FR-NC,Nouvelle-Calédonie,,New caledonia
+collectivité d'outre-mer,FR-BL,Saint-Barthélemy,,Saint barthelemy
+collectivité d'outre-mer,FR-MF,Saint-Martin,,Saint martin
+collectivité d'outre-mer,FR-PM,Saint-Pierre-et-Miquelon,,St. pierre and miquelon
+collectivité d'outre-mer,FR-PF,Polynésie française,,French polynesia
+collectivité d'outre-mer,FR-WF,Wallis-et-Futuna,,Uvea
+territoire d'outre-mer,FR-TF,Terres australes françaises,,
+collectivité métropolitaine à statut particulier,FR-69M,Métropole de Lyon,FR-ARA,
+collectivité métropolitaine à statut particulier,FR-75C,Paris,FR-IDF,
+collectivité métropolitaine à statut particulier,FR-20R,Corse,,Corse
+collectivité européenne,FR-6AE,Alsace,FR-GES,
+dépendance,FR-CP,Clipperton,,
+département métropolitain,FR-01,Ain,FR-ARA,
+département métropolitain,FR-02,Aisne,FR-HDF,
+département métropolitain,FR-03,Allier,FR-ARA,
+département métropolitain,FR-06,Alpes-Maritimes,FR-PAC,
+département métropolitain,FR-04,Alpes-de-Haute-Provence,FR-PAC,
+département métropolitain,FR-08,Ardennes,FR-GES,
+département métropolitain,FR-07,Ardèche,FR-ARA,
+département métropolitain,FR-09,Ariège,FR-OCC,
+département métropolitain,FR-10,Aube,FR-GES,
+département métropolitain,FR-11,Aude,FR-OCC,
+département métropolitain,FR-12,Aveyron,FR-OCC,
+département métropolitain,FR-67,Bas-Rhin,FR-6AE,
+département métropolitain,FR-13,Bouches-du-Rhône,FR-PAC,
+département métropolitain,FR-14,Calvados,FR-NOR,
+département métropolitain,FR-15,Cantal,FR-ARA,
+département métropolitain,FR-16,Charente,FR-NAQ,
+département métropolitain,FR-17,Charente-Maritime,FR-NAQ,
+département métropolitain,FR-18,Cher,FR-CVL,
+département métropolitain,FR-19,Corrèze,FR-NAQ,
+département métropolitain,FR-2A,Corse-du-Sud,FR-20R,
+département métropolitain,FR-23,Creuse,FR-NAQ,
+département métropolitain,FR-21,Côte-d'Or,FR-BFC,
+département métropolitain,FR-22,Côtes-d'Armor,FR-BRE,
+département métropolitain,FR-79,Deux-Sèvres,FR-NAQ,
+département métropolitain,FR-24,Dordogne,FR-NAQ,
+département métropolitain,FR-25,Doubs,FR-BFC,
+département métropolitain,FR-26,Drôme,FR-ARA,
+département métropolitain,FR-91,Essonne,FR-IDF,
+département métropolitain,FR-27,Eure,FR-NOR,
+département métropolitain,FR-28,Eure-et-Loir,FR-CVL,
+département métropolitain,FR-29,Finistère,FR-BRE,
+département métropolitain,FR-30,Gard,FR-OCC,
+département métropolitain,FR-32,Gers,FR-OCC,
+département métropolitain,FR-33,Gironde,FR-NAQ,
+département métropolitain,FR-68,Haut-Rhin,FR-6AE,
+département métropolitain,FR-2B,Haute-Corse,FR-20R,
+département métropolitain,FR-31,Haute-Garonne,FR-OCC,
+département métropolitain,FR-43,Haute-Loire,FR-ARA,
+département métropolitain,FR-52,Haute-Marne,FR-GES,
+département métropolitain,FR-74,Haute-Savoie,FR-ARA,
+département métropolitain,FR-70,Haute-Saône,FR-BFC,
+département métropolitain,FR-87,Haute-Vienne,FR-NAQ,
+département métropolitain,FR-05,Hautes-Alpes,FR-PAC,
+département métropolitain,FR-65,Hautes-Pyrénées,FR-OCC,
+département métropolitain,FR-92,Hauts-de-Seine,FR-IDF,
+département métropolitain,FR-34,Hérault,FR-OCC,
+département métropolitain,FR-35,Ille-et-Vilaine,FR-BRE,
+département métropolitain,FR-36,Indre,FR-CVL,
+département métropolitain,FR-37,Indre-et-Loire,FR-CVL,
+département métropolitain,FR-38,Isère,FR-ARA,
+département métropolitain,FR-39,Jura,FR-BFC,
+département métropolitain,FR-40,Landes,FR-NAQ,
+département métropolitain,FR-41,Loir-et-Cher,FR-CVL,
+département métropolitain,FR-42,Loire,FR-ARA,
+département métropolitain,FR-44,Loire-Atlantique,FR-PDL,
+département métropolitain,FR-45,Loiret,FR-CVL,
+département métropolitain,FR-46,Lot,FR-OCC,
+département métropolitain,FR-47,Lot-et-Garonne,FR-NAQ,
+département métropolitain,FR-48,Lozère,FR-OCC,
+département métropolitain,FR-49,Maine-et-Loire,FR-PDL,
+département métropolitain,FR-50,Manche,FR-NOR,
+département métropolitain,FR-51,Marne,FR-GES,
+département métropolitain,FR-53,Mayenne,FR-PDL,
+département métropolitain,FR-54,Meurthe-et-Moselle,FR-GES,
+département métropolitain,FR-55,Meuse,FR-GES,
+département métropolitain,FR-56,Morbihan,FR-BRE,
+département métropolitain,FR-57,Moselle,FR-GES,
+département métropolitain,FR-58,Nièvre,FR-BFC,
+département métropolitain,FR-59,Nord,FR-HDF,
+département métropolitain,FR-60,Oise,FR-HDF,
+département métropolitain,FR-61,Orne,FR-NOR,
+département métropolitain,FR-62,Pas-de-Calais,FR-HDF,
+département métropolitain,FR-63,Puy-de-Dôme,FR-ARA,
+département métropolitain,FR-64,Pyrénées-Atlantiques,FR-NAQ,
+département métropolitain,FR-66,Pyrénées-Orientales,FR-OCC,
+département métropolitain,FR-69,Rhône,FR-ARA,
+département métropolitain,FR-72,Sarthe,FR-PDL,
+département métropolitain,FR-73,Savoie,FR-ARA,
+département métropolitain,FR-71,Saône-et-Loire,FR-BFC,
+département métropolitain,FR-76,Seine-Maritime,FR-NOR,
+département métropolitain,FR-93,Seine-Saint-Denis,FR-IDF,
+département métropolitain,FR-77,Seine-et-Marne,FR-IDF,
+département métropolitain,FR-80,Somme,FR-HDF,
+département métropolitain,FR-81,Tarn,FR-OCC,
+département métropolitain,FR-82,Tarn-et-Garonne,FR-OCC,
+département métropolitain,FR-90,Territoire de Belfort,FR-BFC,
+département métropolitain,FR-95,Val-d'Oise,FR-IDF,
+département métropolitain,FR-94,Val-de-Marne,FR-IDF,
+département métropolitain,FR-83,Var,FR-PAC,
+département métropolitain,FR-84,Vaucluse,FR-PAC,
+département métropolitain,FR-85,Vendée,FR-PDL,
+département métropolitain,FR-86,Vienne,FR-NAQ,
+département métropolitain,FR-88,Vosges,FR-GES,
+département métropolitain,FR-89,Yonne,FR-BFC,
+département métropolitain,FR-78,Yvelines,FR-IDF,
+territoire hack,FR-HACK-RHONE,"Rhône et métropole de Lyon",FR-ARA,
+territoire hack,FR-HACK-97,"Départements et territoires d'outre-mer, Saint-Pierre-et-Miquelon, Saint-Barthélemy et Saint-Martin (97)",,
+territoire hack,FR-HACK-98,"Wallis-et-Futuna, Polynésie Française et Nouvelle-Calédonie (98)",,
