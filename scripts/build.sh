@@ -36,5 +36,5 @@ meltano_exec invoke dbt:run
 meltano_exec invoke dbt:test
 
 # --- Crée mets en route le fichier crontab avec les jobs récurrents
-meltano schedule list --format=json | python3 scripts/make_crontab.py >crontab.file
+meltano_exec schedule list --format=json | python3 scripts/make_crontab.py >crontab.file
 crontab crontab.file

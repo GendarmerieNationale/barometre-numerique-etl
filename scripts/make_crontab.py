@@ -42,6 +42,7 @@ def get_crontab_entries(commands: dict):
         if len(commands) > 0 and interval in entry_intervals:
             cron_interval = entry_intervals[interval]
             chained_commands = " && ".join(commands)
+            # TODO: see if logger has an option to ignore color characters (tty) ?
             crontab_entries[interval] = (
                 f"{cron_interval} (cd {PROJECT_HOME} && {chained_commands}) "
                 f"2>&1 | /usr/bin/logger -t meltano"

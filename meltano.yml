@@ -190,7 +190,7 @@ plugins:
     - name: file_path
       kind: string
     config:
-      file_path: barnum_raw_data/perceval/perceval.json
+      file_path: ../data/perceval/perceval.json
   loaders:
   - name: target-postgres
     variant: transferwise
