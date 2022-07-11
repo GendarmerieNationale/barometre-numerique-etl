@@ -9,10 +9,15 @@ MELTANO_EXECUTABLE = os.environ.get("CRONTAB_MELTANO_EXECUTABLE", "meltano")
 
 def make_script(commands: dict):
     command_list = [c for c_list in commands.values() for c in c_list]
+    # for the initial run, don't do dbt:run for each source, do it only once after all commands have been run
+    command_list = [
+        c.replace("--transform=run", "--transform=skip") for c in command_list
+    ]
     commands_str = "\n".join(command_list)
     return f"""#!/bin/bash
 set -x
 {commands_str}
+{MELTANO_EXECUTABLE} invoke dbt:run
 """
 
 
