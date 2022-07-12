@@ -66,7 +66,6 @@ pipx install meltano
 > et ne pas oublier de l'activer avec `source venv/bin/activate` avant 
 > de lancer `pip install meltano` ou d'autres commandes meltano.
 
-TODO: pin plugins versions in meltano.yml https://docs.meltano.com/guide/plugin-management#pinning-a-plugin-to-a-specific-version)
 
 ### Créer la base de données Postgres (DWH)
 Créer l'utilisateur `meltano`, qui va effectuer les jobs ETL/ELT
