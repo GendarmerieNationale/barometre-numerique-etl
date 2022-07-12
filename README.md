@@ -122,6 +122,16 @@ Testé avec:
 
 TODO: explain crontab
 
+TODO: how to launch dbt UI
+```
+source scripts/load_dbt_env.sh
+# check that the dbt env variables are well defined: this should be `/path/to/project/transform/profile`
+echo $DBT_PROFILES_DIR
+cd transform
+dbt docs generate
+dbt docs serve
+```
+
 ## Développement
 TODO: nouveaux extracteurs ? meltano SDK?
 
