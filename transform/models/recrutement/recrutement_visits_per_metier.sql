@@ -54,6 +54,7 @@ tmp4 as (
                                                         replace(
                                                             replace(
                                                                 replace(
+                                                                    replace(
                                                                     metier_name_tmp2,
                                                                     'psig',
                                                                     'PSIG'
@@ -71,7 +72,8 @@ tmp4 as (
                         'telecom', 'télécom'),
                     'developpeur', 'développeur'),
                 'helicoptere', 'hélicoptère'),
-            'aerien', 'aérien')
+            'aerien', 'aérien'),
+        'mecanicien','mécanicien')
         as metier_name_tmp4
     from tmp3
 ),
